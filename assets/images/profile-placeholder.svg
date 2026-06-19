@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="760" viewBox="0 0 640 760" role="img" aria-labelledby="title desc">
+  <title id="title">Fotografía profesional pendiente</title>
+  <desc id="desc">Marcador visual para reemplazar por una fotografía de Alejandro</desc>
+  <defs>
+    <linearGradient id="background" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#163d50"/>
+      <stop offset="1" stop-color="#0a2437"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.75" cy="0.2" r="0.8">
+      <stop offset="0" stop-color="#35c7b3" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#35c7b3" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="760" rx="32" fill="url(#background)"/>
+  <rect width="640" height="760" rx="32" fill="url(#glow)"/>
+  <g fill="none" stroke="#c9f3e8" stroke-opacity="0.13">
+    <path d="M0 120h640M0 240h640M0 360h640M0 480h640M0 600h640"/>
+    <path d="M120 0v760M240 0v760M360 0v760M480 0v760"/>
+  </g>
+  <circle cx="320" cy="270" r="104" fill="#c9f3e8" fill-opacity="0.18" stroke="#c9f3e8" stroke-width="3"/>
+  <path d="M145 665c14-149 75-228 175-228s161 79 175 228" fill="#c9f3e8" fill-opacity="0.18" stroke="#c9f3e8" stroke-width="3"/>
+  <g fill="#fff" text-anchor="middle" font-family="Manrope, Arial, sans-serif">
+    <text x="320" y="690" font-size="22" font-weight="700">Tu fotografía profesional</text>
+    <text x="320" y="720" fill-opacity="0.65" font-size="15">Reemplaza este archivo por profile.jpg</text>
+  </g>
+</svg>

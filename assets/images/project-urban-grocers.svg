@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Captura de Urban Grocers pendiente</title>
+  <desc id="desc">Marcador para una captura de las pruebas automatizadas de API</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#092338"/>
+      <stop offset="1" stop-color="#145966"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="1000" cy="120" r="260" fill="#16a394" fill-opacity="0.25"/>
+  <rect x="110" y="125" width="980" height="550" rx="28" fill="#f8fbfb"/>
+  <rect x="110" y="125" width="980" height="70" rx="28" fill="#dce6e9"/>
+  <circle cx="155" cy="160" r="10" fill="#ff8b6a"/>
+  <circle cx="185" cy="160" r="10" fill="#ffd166"/>
+  <circle cx="215" cy="160" r="10" fill="#16a394"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24">
+    <text x="165" y="260" fill="#087b73">def</text>
+    <text x="225" y="260" fill="#183042"> test_create_kit_with_valid_name():</text>
+    <text x="205" y="310" fill="#5c6c78">response = create_kit("QA Portfolio")</text>
+    <text x="205" y="360" fill="#5c6c78">assert response.status_code == 201</text>
+    <text x="165" y="445" fill="#087b73">def</text>
+    <text x="225" y="445" fill="#183042"> test_name_over_limit():</text>
+    <text x="205" y="495" fill="#5c6c78">assert response.status_code == 400</text>
+  </g>
+  <rect x="165" y="565" width="280" height="55" rx="28" fill="#c9f3e8"/>
+  <text x="305" y="600" fill="#087b73" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-size="19" font-weight="700">Captura sugerida: Pytest</text>
+</svg>
