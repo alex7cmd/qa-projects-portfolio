@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Pruebas de API en Postman</title>
+  <desc id="desc">Marcador visual para reemplazar por una captura real de Postman.</desc>
+  <rect width="1200" height="675" fill="#061725"/>
+  <rect x="54" y="54" width="1092" height="567" rx="28" fill="#0b2638" stroke="#2f5263"/>
+  <text x="94" y="112" fill="#c9f3e8" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="2">POSTMAN / API TESTING</text>
+  <rect x="94" y="150" width="112" height="48" rx="10" fill="#ff6c37"/>
+  <text x="124" y="181" fill="#ffffff" font-family="Arial, sans-serif" font-size="17" font-weight="700">POST</text>
+  <rect x="220" y="150" width="886" height="48" rx="10" fill="#061725"/>
+  <text x="247" y="181" fill="#ffffff" font-family="Arial, sans-serif" font-size="17">/api/v1/orders</text>
+  <text x="94" y="256" fill="#9db3bf" font-family="Arial, sans-serif" font-size="15" font-weight="700">TEST RESULTS</text>
+  <g font-family="Arial, sans-serif" font-size="17">
+    <text x="112" y="306" fill="#63dfbd">PASS</text><text x="220" y="306" fill="#ffffff">Status code is 201</text>
+    <text x="112" y="354" fill="#63dfbd">PASS</text><text x="220" y="354" fill="#ffffff">Response time is below 500 ms</text>
+    <text x="112" y="402" fill="#63dfbd">PASS</text><text x="220" y="402" fill="#ffffff">Response schema is valid</text>
+  </g>
+  <rect x="94" y="458" width="1012" height="105" rx="12" fill="#061725"/>
+  <text x="122" y="499" fill="#9db3bf" font-family="monospace" font-size="16">{ "status": "created", "id": "QA-2026" }</text>
+  <text x="122" y="538" fill="#5e7a89" font-family="Arial, sans-serif" font-size="14">Placeholder: reemplazar con la colección o ejecución real anonimizada.</text>
+</svg>

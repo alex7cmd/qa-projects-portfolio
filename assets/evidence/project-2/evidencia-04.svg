@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Pruebas funcionales móviles</title>
+  <desc id="desc">Marcador visual para reemplazar por una captura real de pruebas en Android.</desc>
+  <rect width="1200" height="675" fill="#061725"/>
+  <rect x="54" y="54" width="1092" height="567" rx="28" fill="#0b2638" stroke="#2f5263"/>
+  <text x="94" y="112" fill="#c9f3e8" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="2">ANDROID / PRUEBA FUNCIONAL</text>
+  <rect x="102" y="154" width="258" height="390" rx="34" fill="#061725" stroke="#527080" stroke-width="3"/>
+  <rect x="123" y="194" width="216" height="301" rx="18" fill="#f7fafb"/>
+  <circle cx="231" cy="175" r="7" fill="#527080"/>
+  <rect x="147" y="226" width="168" height="20" rx="10" fill="#dce8ec"/>
+  <rect x="147" y="267" width="168" height="72" rx="12" fill="#c9f3e8"/>
+  <rect x="147" y="360" width="168" height="42" rx="21" fill="#16a394"/>
+  <text x="185" y="387" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="700">CONFIRMAR</text>
+  <g font-family="Arial, sans-serif">
+    <text x="430" y="192" fill="#ffffff" font-size="34" font-weight="700">Flujo validado en dispositivo móvil</text>
+    <text x="430" y="251" fill="#9db3bf" font-size="17">• Diseño y ejecución de escenarios positivos y negativos</text>
+    <text x="430" y="293" fill="#9db3bf" font-size="17">• Validación de mensajes, estados y navegación</text>
+    <text x="430" y="335" fill="#9db3bf" font-size="17">• Registro de evidencia y comportamiento observado</text>
+  </g>
+  <rect x="430" y="407" width="650" height="105" rx="12" fill="#c9f3e8" fill-opacity=".08"/>
+  <text x="460" y="452" fill="#c9f3e8" font-family="Arial, sans-serif" font-size="18" font-weight="700">Resultado</text>
+  <text x="460" y="484" fill="#9db3bf" font-family="Arial, sans-serif" font-size="15">Placeholder: reemplazar por captura o video corto del flujo real.</text>
+</svg>

@@ -51,6 +51,10 @@ body.menu-open {
   overflow: hidden;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -650,6 +654,279 @@ a {
   text-underline-offset: 0.3rem;
 }
 
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  align-items: center;
+}
+
+.evidence-button {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+/* Modal de evidencias: usa la misma paleta navy y menta del sitio. */
+.evidence-modal {
+  position: fixed;
+  z-index: 500;
+  inset: 0;
+  display: grid;
+  padding: clamp(0.75rem, 3vw, 2rem);
+  overflow-y: auto;
+  background: rgb(4 17 28 / 88%);
+  backdrop-filter: blur(14px);
+  place-items: center;
+}
+
+.evidence-modal[hidden],
+.evidence-lightbox[hidden] {
+  display: none;
+}
+
+.evidence-dialog {
+  position: relative;
+  width: min(62rem, 100%);
+  max-height: calc(100dvh - clamp(1.5rem, 6vw, 4rem));
+  overflow-y: auto;
+  color: var(--color-surface);
+  background: var(--color-navy-900);
+  border: 1px solid rgb(201 243 232 / 22%);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 32px 90px rgb(0 0 0 / 42%);
+  animation: evidence-dialog-in 260ms ease both;
+}
+
+.evidence-dialog-header {
+  display: flex;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  gap: 1.5rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
+}
+
+.evidence-dialog-header .section-kicker {
+  margin-bottom: 0.45rem;
+  color: var(--color-mint);
+}
+
+.evidence-dialog-header h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.65rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.evidence-dialog-header p:last-child {
+  margin: 0.65rem 0 0;
+  color: rgb(255 255 255 / 62%);
+  font-size: 0.88rem;
+}
+
+.evidence-icon-button,
+.evidence-control {
+  display: inline-grid;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0;
+  flex: 0 0 auto;
+  color: var(--color-surface);
+  background: rgb(255 255 255 / 8%);
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 50%;
+  cursor: pointer;
+  place-items: center;
+  transition:
+    color var(--transition),
+    background-color var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
+}
+
+.evidence-icon-button:hover,
+.evidence-control:hover {
+  color: var(--color-navy-950);
+  background: var(--color-mint);
+  border-color: var(--color-mint);
+  transform: translateY(-2px);
+}
+
+.evidence-carousel {
+  position: relative;
+  padding: clamp(1rem, 3vw, 2rem) clamp(3.4rem, 7vw, 5rem);
+}
+
+.evidence-viewport {
+  overflow: hidden;
+  background: var(--color-navy-950);
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: var(--radius-md);
+}
+
+.evidence-track {
+  display: flex;
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.evidence-slide {
+  position: relative;
+  display: block;
+  min-width: 100%;
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-navy-950);
+  border: 0;
+  cursor: zoom-in;
+}
+
+.evidence-slide img {
+  width: 100%;
+  height: min(50dvh, 28rem);
+  object-fit: contain;
+  transition: transform 400ms ease;
+}
+
+.evidence-slide:hover img {
+  transform: scale(1.015);
+}
+
+.evidence-slide.is-missing {
+  display: grid;
+  aspect-ratio: 16 / 9;
+  color: rgb(255 255 255 / 55%);
+  background:
+    linear-gradient(135deg, rgb(22 163 148 / 18%), transparent),
+    var(--color-navy-950);
+  cursor: default;
+  place-items: center;
+}
+
+.evidence-slide.is-missing::after {
+  padding: 1rem;
+  content: attr(data-fallback);
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.evidence-control {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.evidence-control:hover {
+  transform: translateY(calc(-50% - 2px));
+}
+
+.evidence-control-prev {
+  left: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.evidence-control-next {
+  right: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.evidence-dialog-footer {
+  display: flex;
+  padding: 0 clamp(1.25rem, 4vw, 2rem) 1.5rem;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.evidence-dialog-footer p {
+  margin: 0;
+  color: rgb(255 255 255 / 50%);
+  font-size: 0.72rem;
+}
+
+.evidence-dots {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.evidence-dots button {
+  width: 0.65rem;
+  height: 0.65rem;
+  padding: 0;
+  background: rgb(255 255 255 / 24%);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    width var(--transition),
+    background-color var(--transition);
+}
+
+.evidence-dots button[aria-current="true"] {
+  width: 1.8rem;
+  background: var(--color-mint);
+  border-radius: 999px;
+}
+
+.evidence-lightbox {
+  position: fixed;
+  z-index: 520;
+  inset: 0;
+  display: grid;
+  padding: clamp(1rem, 4vw, 3rem);
+  overflow-y: auto;
+  background: rgb(0 0 0 / 86%);
+  place-items: center;
+}
+
+.evidence-lightbox-content {
+  position: relative;
+  width: min(76rem, 100%);
+  margin: 0;
+}
+
+.evidence-lightbox-content img {
+  width: 100%;
+  max-height: 78dvh;
+  object-fit: contain;
+  background: var(--color-navy-950);
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.evidence-lightbox-content figcaption {
+  margin-top: 0.75rem;
+  color: rgb(255 255 255 / 68%);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.evidence-lightbox-close {
+  position: absolute;
+  z-index: 2;
+  top: 0.75rem;
+  right: 0.75rem;
+  color: var(--color-navy-950);
+  background: var(--color-mint);
+  border-color: var(--color-mint);
+}
+
+@keyframes evidence-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* Contacto separa contenido y formulario con Grid. */
 .contact {
   color: var(--color-surface);
@@ -660,7 +937,7 @@ a {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(20rem, 0.65fr);
   gap: clamp(3rem, 8vw, 7rem);
-  align-items: start;
+  align-items: stretch;
 }
 
 .contact .section-kicker {
@@ -701,8 +978,121 @@ a {
   color: rgb(255 255 255 / 42%);
 }
 
+/* LinkedIn usa los mismos tokens visuales del portafolio. */
+.linkedin-card {
+  max-width: 35rem;
+  margin-top: 2rem;
+  overflow: hidden;
+  background: linear-gradient(145deg, var(--color-navy-800), var(--color-navy-900));
+  border: 1px solid rgb(201 243 232 / 18%);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.linkedin-card-header {
+  display: flex;
+  padding: 0.9rem 1.1rem;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  background: rgb(255 255 255 / 7%);
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+}
+
+.linkedin-wordmark {
+  color: var(--color-surface);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.linkedin-wordmark span {
+  display: inline-grid;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-left: 0.12rem;
+  color: var(--color-navy-950);
+  background: var(--color-mint);
+  border-radius: 0.2rem;
+  place-items: center;
+  font-size: 0.78rem;
+  letter-spacing: -0.05em;
+}
+
+.linkedin-card-label {
+  color: rgb(255 255 255 / 52%);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.linkedin-card-body {
+  padding: 1.25rem;
+}
+
+.linkedin-card-identity {
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.linkedin-card-avatar {
+  display: grid;
+  width: 3.5rem;
+  flex: 0 0 3.5rem;
+  aspect-ratio: 1;
+  color: var(--color-navy-950);
+  background: var(--color-mint);
+  border: 3px solid rgb(255 255 255 / 14%);
+  border-radius: 50%;
+  place-items: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.linkedin-card h3 {
+  margin: 0;
+  color: var(--color-surface);
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.linkedin-card-identity p {
+  margin: 0.15rem 0 0;
+  color: var(--color-mint);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.linkedin-card-summary {
+  margin: 1rem 0;
+  color: rgb(255 255 255 / 72%);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.linkedin-card-meta {
+  display: flex;
+  margin: 0 0 1.1rem;
+  gap: 0.45rem;
+  align-items: center;
+  color: rgb(255 255 255 / 50%);
+  font-size: 0.72rem;
+}
+
+.linkedin-card .linkedin-card-cta {
+  min-height: 2.75rem;
+  padding-inline: 1rem;
+  color: var(--color-navy-950);
+  font-size: 0.78rem;
+}
+
 .contact-form {
+  display: flex;
+  height: 100%;
   padding: clamp(1.5rem, 4vw, 2.25rem);
+  flex-direction: column;
   color: var(--color-ink);
   background: var(--color-surface);
   border-radius: var(--radius-md);
@@ -738,6 +1128,15 @@ a {
 .form-row textarea {
   min-height: 8rem;
   resize: vertical;
+}
+
+/* El mensaje crece para equilibrar la altura de ambas columnas. */
+.form-row-message {
+  flex: 1;
+}
+
+.form-row-message textarea {
+  flex: 1;
 }
 
 .form-row input:focus,
@@ -941,6 +1340,60 @@ a {
   .project-details > div {
     grid-template-columns: 1fr;
     gap: 0.25rem;
+  }
+
+  .evidence-modal {
+    padding: 0.65rem;
+    align-items: center;
+  }
+
+  .evidence-dialog {
+    max-height: calc(100dvh - 1.3rem);
+    border-radius: var(--radius-md);
+  }
+
+  .evidence-dialog-header {
+    padding: 1.15rem;
+  }
+
+  .evidence-dialog-header p:last-child {
+    font-size: 0.78rem;
+  }
+
+  .evidence-carousel {
+    padding: 1rem 0.75rem 4rem;
+  }
+
+  .evidence-slide img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .evidence-control {
+    top: auto;
+    bottom: 0.65rem;
+    transform: none;
+  }
+
+  .evidence-control:hover {
+    transform: translateY(-2px);
+  }
+
+  .evidence-control-prev {
+    left: calc(50% - 3.25rem);
+  }
+
+  .evidence-control-next {
+    right: calc(50% - 3.25rem);
+  }
+
+  .evidence-dialog-footer {
+    padding-bottom: 1.1rem;
+  }
+
+  .evidence-lightbox {
+    padding: 0.75rem;
   }
 
   .footer-inner {

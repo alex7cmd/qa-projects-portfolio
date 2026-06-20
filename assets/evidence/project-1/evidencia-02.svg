@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Estructura del proyecto Urban Grocers API</title>
+  <desc id="desc">Placeholder para reemplazar por una captura real de archivos del proyecto</desc>
+  <rect width="1200" height="675" fill="#081b2c"/>
+  <circle cx="125" cy="560" r="260" fill="#ff8b6a" fill-opacity=".12"/>
+  <rect x="105" y="75" width="990" height="520" rx="28" fill="#f3f7f8"/>
+  <rect x="105" y="75" width="285" height="520" rx="28" fill="#102b40"/>
+  <text x="150" y="135" fill="#c9f3e8" font-family="Manrope, Arial, sans-serif" font-size="24" font-weight="800">URBAN_GROCERS_API</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="23" fill="#fff" fill-opacity=".78">
+    <text x="155" y="205">▾ project</text>
+    <text x="185" y="255">configuration.py</text>
+    <text x="185" y="300">data.py</text>
+    <text x="185" y="345">sender_stand_request.py</text>
+    <text x="185" y="390">create_kit_name_test.py</text>
+    <text x="185" y="435">README.md</text>
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22">
+    <text x="455" y="155" fill="#087b73">def</text>
+    <text x="505" y="155" fill="#183042"> get_kit_body(name):</text>
+    <text x="495" y="205" fill="#5c6c78">return {"name": name}</text>
+    <text x="455" y="285" fill="#087b73">def</text>
+    <text x="505" y="285" fill="#183042"> positive_assert(name):</text>
+    <text x="495" y="335" fill="#5c6c78">response = post_new_client_kit(name)</text>
+    <text x="495" y="385" fill="#5c6c78">assert response.status_code == 201</text>
+  </g>
+  <text x="600" y="638" fill="#c9f3e8" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-size="20" font-weight="700">Placeholder · Reemplazar con estructura real del proyecto</text>
+</svg>

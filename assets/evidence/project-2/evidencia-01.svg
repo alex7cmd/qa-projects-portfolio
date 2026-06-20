@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Matriz de casos de prueba funcionales</title>
+  <desc id="desc">Marcador visual para reemplazar por una captura real de casos de prueba.</desc>
+  <rect width="1200" height="675" fill="#061725"/>
+  <rect x="54" y="54" width="1092" height="567" rx="28" fill="#0b2638" stroke="#2f5263"/>
+  <text x="94" y="114" fill="#c9f3e8" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="2">CASOS DE PRUEBA / QA MANUAL</text>
+  <text x="94" y="166" fill="#ffffff" font-family="Arial, sans-serif" font-size="34" font-weight="700">Validación de flujo de solicitud</text>
+  <rect x="94" y="208" width="1012" height="58" rx="10" fill="#12364a"/>
+  <g fill="#9db3bf" font-family="Arial, sans-serif" font-size="16" font-weight="700">
+    <text x="122" y="244">ID</text><text x="220" y="244">ESCENARIO</text><text x="700" y="244">PRIORIDAD</text><text x="920" y="244">ESTADO</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="17">
+    <text x="122" y="310" fill="#c9f3e8">CP-01</text><text x="220" y="310" fill="#ffffff">Crear solicitud con datos válidos</text><text x="700" y="310" fill="#ffffff">Alta</text><text x="920" y="310" fill="#63dfbd">Aprobado</text>
+    <text x="122" y="374" fill="#c9f3e8">CP-02</text><text x="220" y="374" fill="#ffffff">Validar campos obligatorios</text><text x="700" y="374" fill="#ffffff">Alta</text><text x="920" y="374" fill="#63dfbd">Aprobado</text>
+    <text x="122" y="438" fill="#c9f3e8">CP-03</text><text x="220" y="438" fill="#ffffff">Cancelar solicitud activa</text><text x="700" y="438" fill="#ffffff">Media</text><text x="920" y="438" fill="#f3d37b">En revisión</text>
+  </g>
+  <line x1="94" y1="330" x2="1106" y2="330" stroke="#29485a"/><line x1="94" y1="394" x2="1106" y2="394" stroke="#29485a"/>
+  <rect x="94" y="505" width="1012" height="68" rx="12" fill="#c9f3e8" fill-opacity=".08"/>
+  <text x="122" y="546" fill="#9db3bf" font-family="Arial, sans-serif" font-size="16">Placeholder: reemplazar con la matriz real sin exponer datos sensibles.</text>
+</svg>

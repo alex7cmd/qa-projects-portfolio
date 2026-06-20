@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Pruebas automatizadas con Pytest</title>
+  <desc id="desc">Placeholder para reemplazar por una captura real de la ejecución de pruebas</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#071c2d"/>
+      <stop offset="1" stop-color="#0e4b58"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="1040" cy="80" r="220" fill="#16a394" fill-opacity=".22"/>
+  <rect x="95" y="85" width="1010" height="505" rx="26" fill="#061827" stroke="#c9f3e8" stroke-opacity=".28" stroke-width="2"/>
+  <rect x="95" y="85" width="1010" height="64" rx="26" fill="#163447"/>
+  <circle cx="137" cy="117" r="9" fill="#ff8b6a"/>
+  <circle cx="167" cy="117" r="9" fill="#ffd166"/>
+  <circle cx="197" cy="117" r="9" fill="#5ef0b2"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24">
+    <text x="145" y="220" fill="#c9f3e8">$ pytest -v create_kit_name_kit_test.py</text>
+    <text x="145" y="285" fill="#5ef0b2">test_create_kit_1_letter PASSED</text>
+    <text x="145" y="330" fill="#5ef0b2">test_create_kit_511_letters PASSED</text>
+    <text x="145" y="375" fill="#5ef0b2">test_create_kit_special_chars PASSED</text>
+    <text x="145" y="420" fill="#5ef0b2">test_create_kit_number_name PASSED</text>
+    <text x="145" y="505" fill="#fff" fill-opacity=".72">9 passed in 3.42s</text>
+  </g>
+  <text x="600" y="638" fill="#c9f3e8" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-size="20" font-weight="700">Placeholder · Reemplazar con captura real de Pytest</text>
+</svg>

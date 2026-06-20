@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Evidencia técnica de Urban Grocers</title>
+  <desc id="desc">Placeholder para reemplazar por documentación o reporte técnico real</desc>
+  <rect width="1200" height="675" fill="#061827"/>
+  <circle cx="1060" cy="575" r="250" fill="#16a394" fill-opacity=".2"/>
+  <rect x="125" y="80" width="950" height="515" rx="30" fill="#f3f7f8"/>
+  <text x="185" y="150" fill="#183042" font-family="Manrope, Arial, sans-serif" font-size="30" font-weight="800">Reporte de ejecución</text>
+  <text x="185" y="190" fill="#5c6c78" font-family="Manrope, Arial, sans-serif" font-size="18">Urban Grocers API · Suite de creación de kits</text>
+  <g font-family="Manrope, Arial, sans-serif">
+    <rect x="185" y="245" width="235" height="145" rx="22" fill="#c9f3e8"/>
+    <text x="302" y="300" fill="#087b73" text-anchor="middle" font-size="42" font-weight="800">9</text>
+    <text x="302" y="345" fill="#183042" text-anchor="middle" font-size="18" font-weight="700">casos ejecutados</text>
+    <rect x="482" y="245" width="235" height="145" rx="22" fill="#fff" stroke="#dce6e9" stroke-width="2"/>
+    <text x="599" y="300" fill="#16a394" text-anchor="middle" font-size="42" font-weight="800">9</text>
+    <text x="599" y="345" fill="#183042" text-anchor="middle" font-size="18" font-weight="700">pruebas aprobadas</text>
+    <rect x="779" y="245" width="235" height="145" rx="22" fill="#fff" stroke="#dce6e9" stroke-width="2"/>
+    <text x="896" y="300" fill="#ff8b6a" text-anchor="middle" font-size="42" font-weight="800">0</text>
+    <text x="896" y="345" fill="#183042" text-anchor="middle" font-size="18" font-weight="700">fallos</text>
+    <text x="185" y="470" fill="#087b73" font-size="19" font-weight="800">Cobertura</text>
+    <text x="185" y="510" fill="#5c6c78" font-size="18">Datos válidos · Datos inválidos · Valores límite · Caracteres especiales</text>
+  </g>
+  <text x="600" y="638" fill="#c9f3e8" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-size="20" font-weight="700">Placeholder · Reemplazar con evidencia técnica real</text>
+</svg>
