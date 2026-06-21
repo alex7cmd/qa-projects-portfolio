@@ -53,8 +53,9 @@
           themeMode === "system" ? systemTheme : themeMode;
       })();
     </script>
-    <link rel="stylesheet" href="css/styles.css" />
-    <script src="js/main.js" defer></script>
+    <!-- La versión evita mezclar archivos antiguos y nuevos tras un despliegue. -->
+    <link rel="stylesheet" href="css/styles.css?v=20260620-1" />
+    <script src="js/main.js?v=20260620-1" defer></script>
   </head>
 
   <body>
