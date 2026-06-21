@@ -1,20 +1,20 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- SEO básico: ayuda a buscadores y mejora la vista al compartir el sitio. -->
+    <!-- Metadatos para buscadores y vistas previas al compartir. -->
     <title>Alejandro Fernández | QA Tester Jr.</title>
     <meta
       name="description"
-      content="Portafolio de Alejandro Fernández, QA Tester Jr. enfocado en pruebas manuales, API testing y automatización con Python."
+      content="Portafolio de Alejandro Fernández, QA Tester Jr. enfocado en pruebas funcionales, UI Testing, API Testing y documentación de bugs."
     />
     <meta name="theme-color" content="#081b2c" />
     <meta property="og:title" content="Alejandro Fernández | QA Tester Jr." />
     <meta
       property="og:description"
-      content="Proyectos de pruebas funcionales, móviles, API testing y automatización."
+      content="Proyectos de pruebas funcionales, regresión y API Testing con Postman."
     />
     <meta property="og:type" content="website" />
     <meta
@@ -23,19 +23,42 @@
     />
     <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
 
-    <!-- Preconnect reduce el tiempo de carga de Google Fonts. -->
+    <!-- Preconnect reduce la latencia de las fuentes externas. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0&amp;display=swap"
       rel="stylesheet"
     />
+    <!-- El tema se aplica antes del CSS para evitar un cambio de color al cargar. -->
+    <script>
+      (() => {
+        const storageKey = "portfolio-theme-mode";
+        let savedMode = null;
+
+        try {
+          savedMode = localStorage.getItem(storageKey);
+        } catch {
+          // El almacenamiento puede estar bloqueado en contextos restringidos.
+        }
+
+        const validModes = ["system", "light", "dark"];
+        const themeMode = validModes.includes(savedMode) ? savedMode : "system";
+        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+
+        document.documentElement.dataset.themeMode = themeMode;
+        document.documentElement.dataset.theme =
+          themeMode === "system" ? systemTheme : themeMode;
+      })();
+    </script>
     <link rel="stylesheet" href="css/styles.css" />
     <script src="js/main.js" defer></script>
   </head>
 
   <body>
-    <!-- Permite saltar el menú al navegar con teclado. -->
+    <!-- Acceso directo al contenido para navegación por teclado. -->
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
     <header class="site-header" data-header>
@@ -45,29 +68,42 @@
           <span>Alejandro Fernández</span>
         </a>
 
-        <button
-          class="menu-toggle"
-          type="button"
-          aria-label="Abrir menú"
-          aria-controls="main-nav"
-          aria-expanded="false"
-          data-menu-button
-        >
-          <span class="material-symbols-rounded" aria-hidden="true">menu</span>
-        </button>
+        <div class="header-actions">
+          <nav class="main-nav" id="main-nav" aria-label="Navegación principal" data-nav>
+            <a href="#acerca">Acerca de mí</a>
+            <a href="#proyecto-1">Proyecto 1</a>
+            <a href="#proyecto-2">Proyecto 2</a>
+            <a class="nav-cta" href="#contacto">Contacto</a>
+          </nav>
 
-        <!-- nav describe el bloque de navegación a lectores de pantalla. -->
-        <nav class="main-nav" id="main-nav" aria-label="Navegación principal" data-nav>
-          <a href="#acerca">Acerca de mí</a>
-          <a href="#proyecto-1">Proyecto 1</a>
-          <a href="#proyecto-2">Proyecto 2</a>
-          <a class="nav-cta" href="#contacto">Contacto</a>
-        </nav>
+          <button
+            class="theme-toggle"
+            type="button"
+            aria-label="Tema automático. Cambiar a modo claro"
+            title="Tema automático"
+            data-theme-toggle
+          >
+            <span class="material-symbols-rounded" aria-hidden="true" data-theme-icon>
+              brightness_auto
+            </span>
+          </button>
+
+          <button
+            class="menu-toggle"
+            type="button"
+            aria-label="Abrir menú"
+            aria-controls="main-nav"
+            aria-expanded="false"
+            data-menu-button
+          >
+            <span class="material-symbols-rounded" aria-hidden="true">menu</span>
+          </button>
+        </div>
       </div>
     </header>
 
     <main id="contenido">
-      <!-- Hero: presenta el perfil y su propuesta de valor en pocos segundos. -->
+      <!-- Presentación principal y llamadas a la acción. -->
       <section class="hero" id="inicio" aria-labelledby="hero-title">
         <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
         <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
@@ -114,12 +150,14 @@
 
           <div class="hero-visual reveal is-visible">
             <div class="portrait-frame">
-              <!-- Sustituye este SVG por assets/images/profile.jpg. -->
+              <!-- Las dimensiones explícitas reservan espacio y evitan layout shift. -->
               <img
-                src="assets/images/profile-placeholder.svg"
-                alt="Espacio reservado para la fotografía profesional de Alejandro Fernández"
+                src="assets/images/profile-placeholder.webp"
+                alt="Retrato profesional de Alejandro Fernández, QA Tester Jr."
                 width="640"
                 height="760"
+                decoding="async"
+                fetchpriority="high"
               />
               <div class="floating-badge badge-top" aria-hidden="true">
                 <span class="material-symbols-rounded">verified</span>
@@ -134,7 +172,7 @@
         </div>
       </section>
 
-      <!-- Acerca: conecta experiencia actual con los puestos buscados. -->
+      <!-- Trayectoria profesional y objetivos de carrera actuales. -->
       <section class="section about" id="acerca" aria-labelledby="about-title">
         <div class="container about-grid">
           <div class="section-heading reveal">
@@ -155,7 +193,7 @@
             <p>
               Actualmente me enfoco en pruebas funcionales web y móviles, diseño de
               casos de prueba, validación de APIs con Postman y documentación de
-              defectos en JIRA. Busco oportunidades como <strong>QA Tester Jr.</strong>,
+              defectos en Jira. Busco oportunidades como <strong>QA Tester Jr.</strong>,
               <strong>QA Manual Jr.</strong> o <strong>QA Engineer Trainee</strong>, donde
               pueda aportar orden, criterio, comunicación clara y disposición para
               seguir aprendiendo dentro de un equipo de calidad.
@@ -170,10 +208,9 @@
                 <li>Reporte de bugs</li>
                 <li>API Testing</li>
                 <li>Postman</li>
-                <li>JIRA</li>
+                <li>Jira</li>
                 <li>DevTools</li>
                 <li>Android Studio</li>
-                <li>Python / Pytest</li>
                 <li>Git / GitHub</li>
               </ul>
             </div>
@@ -181,7 +218,7 @@
         </div>
       </section>
 
-      <!-- Proyectos: cada tarjeta funciona como un caso de estudio breve. -->
+      <!-- Casos de estudio QA seleccionados. -->
       <section class="section projects" id="proyectos" aria-labelledby="projects-title">
         <div class="container">
           <div class="section-heading projects-heading reveal">
@@ -199,64 +236,66 @@
           <article class="project-card reveal" id="proyecto-1">
             <div class="project-media">
               <img
-                src="assets/images/project-urban-grocers.svg"
-                alt="Marcador para una captura de las pruebas automatizadas de Urban Grocers"
+                src="assets/images/project-quality-testing.svg"
+                alt="Ilustración del proceso de pruebas funcionales de Urban Routes"
                 width="1200"
                 height="800"
                 loading="lazy"
+                decoding="async"
               />
               <span class="project-number">Proyecto 01</span>
             </div>
 
             <div class="project-body">
-              <p class="project-type">API Testing · Automatización</p>
-              <h3>Urban Grocers API: pruebas automatizadas con Python y Pytest</h3>
+              <p class="project-type">QA Manual · Functional Testing · Regression Testing</p>
+              <h3>Urban Routes — Pruebas funcionales y de regresión</h3>
 
               <dl class="project-details">
                 <div>
                   <dt>Problema</dt>
                   <dd>
-                    Validar que la API permitiera crear kits de productos de forma
-                    correcta y que respondiera adecuadamente ante datos válidos,
-                    inválidos y valores límite.
+                    Validar que los flujos principales de Urban Routes funcionaran
+                    según los requisitos: direcciones, tarifas, licencia de conducir,
+                    método de pago, opciones del pedido y mensajes de la interfaz.
                   </dd>
                 </div>
                 <div>
                   <dt>Qué hice</dt>
                   <dd>
-                    Diseñé escenarios de prueba para el campo <code>name</code>, ejecuté
-                    pruebas automatizadas con Python y Pytest, trabajé con solicitudes
-                    HTTP, JSON y autenticación, y verifiqué respuestas del backend según
-                    los requisitos.
+                    Convertí requisitos funcionales en casos de prueba y ejecuté pruebas
+                    manuales, UI Testing y regresión. Registré resultados en checklists y
+                    documenté bugs en Jira con entorno, severidad, pasos y evidencia.
                   </dd>
                 </div>
                 <div>
                   <dt>Resultado o aprendizaje</dt>
                   <dd>
-                    Fortalecí mis bases en API Testing, automatización inicial, análisis
-                    de reglas de negocio y validación de respuestas del servidor.
+                    Fortalecí mi capacidad para validar flujos de usuario, detectar
+                    inconsistencias funcionales y visuales, y comunicar errores de forma
+                    clara, reproducible y útil para desarrollo.
                   </dd>
                 </div>
               </dl>
 
               <ul class="tag-list" aria-label="Tecnologías del proyecto 1">
-                <li>Python</li>
-                <li>Pytest</li>
-                <li>API REST</li>
-                <li>JSON</li>
-                <li>HTTP</li>
-                <li>GitHub</li>
+                <li>DevTools</li>
+                <li>Jira</li>
+                <li>Google Sheets</li>
+                <li>QA Web</li>
+                <li>UI Testing</li>
+                <li>Functional Testing</li>
+                <li>Regression Testing</li>
               </ul>
 
               <div class="project-actions">
-                <a class="text-link" href="https://github.com/alex7cmd" target="_blank" rel="noreferrer">
-                  Ver perfil de GitHub
-                  <span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>
-                </a>
+                <p class="text-link">
+                  Documentación disponible bajo solicitud
+                  <span class="material-symbols-rounded" aria-hidden="true">description</span>
+                </p>
                 <button
                   class="text-link evidence-button"
                   type="button"
-                  aria-label="Ver evidencias del proyecto Urban Grocers API"
+                  aria-label="Ver evidencias del proyecto Urban Routes"
                   data-gallery-open="project-1-gallery"
                 >
                   Ver evidencias
@@ -269,53 +308,57 @@
           <article class="project-card project-card-reverse reveal" id="proyecto-2">
             <div class="project-media">
               <img
-                src="assets/images/project-quality-testing.svg"
-                alt="Marcador para capturas de pruebas web, móviles y de API"
+                src="assets/images/project-urban-grocers.svg"
+                alt="Ilustración de las pruebas de API realizadas en Urban Grocers"
                 width="1200"
                 height="800"
                 loading="lazy"
+                decoding="async"
               />
               <span class="project-number">Proyecto 02</span>
             </div>
 
             <div class="project-body">
-              <p class="project-type">QA Manual · Web · Móvil · API</p>
-              <h3>Urban Routes / Urban Grocers: pruebas funcionales web, móvil y API</h3>
+              <p class="project-type">API Testing · Postman · REST API</p>
+              <h3>Urban Grocers API — Pruebas de API con Postman</h3>
 
               <dl class="project-details">
                 <div>
                   <dt>Problema</dt>
                   <dd>
-                    Evaluar funcionalidades clave de aplicaciones web, móviles y
-                    servicios backend, asegurando que los flujos principales cumplieran
-                    con los requisitos definidos.
+                    Validar que los endpoints de Urban Grocers respondieran correctamente
+                    ante datos válidos, inválidos y valores límite, considerando métodos
+                    HTTP, parámetros, body JSON, status codes y mensajes de error.
                   </dd>
                 </div>
                 <div>
                   <dt>Qué hice</dt>
                   <dd>
-                    Analicé requisitos, diseñé casos de prueba, ejecuté pruebas manuales,
-                    validé respuestas de API con Postman y documenté defectos en JIRA con
-                    pasos de reproducción, resultado esperado, resultado actual y evidencia.
+                    Ejecuté requests en Postman y validé status codes, respuestas JSON y
+                    reglas de negocio. Diseñé pruebas positivas y negativas con clases de
+                    equivalencia y valores límite, y documenté errores en Jira.
                   </dd>
                 </div>
                 <div>
                   <dt>Resultado o aprendizaje</dt>
                   <dd>
-                    Desarrollé un proceso más estructurado para detectar, priorizar y
-                    comunicar errores de forma clara, útil y reproducible para el equipo
-                    de desarrollo.
+                    Fortalecí mis bases en API Testing, interpretación de respuestas del
+                    servidor, validación de reglas de negocio y documentación de errores
+                    técnicos con información suficiente para reproducirlos.
                   </dd>
                 </div>
               </dl>
 
               <ul class="tag-list" aria-label="Tecnologías del proyecto 2">
-                <li>Pruebas funcionales</li>
                 <li>Postman</li>
-                <li>JIRA</li>
-                <li>DevTools</li>
-                <li>Android Studio</li>
-                <li>Casos de prueba</li>
+                <li>JSON</li>
+                <li>REST API</li>
+                <li>Métodos HTTP</li>
+                <li>Endpoints</li>
+                <li>Status codes</li>
+                <li>Apidoc</li>
+                <li>Jira</li>
+                <li>Google Sheets</li>
               </ul>
 
               <div class="project-actions">
@@ -326,7 +369,7 @@
                 <button
                   class="text-link evidence-button"
                   type="button"
-                  aria-label="Ver evidencias del proyecto de pruebas funcionales"
+                  aria-label="Ver evidencias del proyecto Urban Grocers API"
                   data-gallery-open="project-2-gallery"
                 >
                   Ver evidencias
@@ -338,7 +381,7 @@
         </div>
       </section>
 
-      <!-- Contacto: el formulario usa mailto porque GitHub Pages no ejecuta backend. -->
+      <!-- GitHub Pages no ejecuta backend; el formulario prepara una solicitud mailto. -->
       <section class="section contact" id="contacto" aria-labelledby="contact-title">
         <div class="container contact-card reveal">
           <div class="contact-copy">
@@ -362,7 +405,7 @@
               </a>
             </div>
 
-            <!-- Tarjeta propia: conserva la información de LinkedIn con el estilo del sitio. -->
+            <!-- Tarjeta de perfil propia, sin dependencias de embeds externos. -->
             <article class="linkedin-card" aria-labelledby="linkedin-card-title">
               <div class="linkedin-card-header">
                 <span class="linkedin-wordmark" aria-label="LinkedIn">
@@ -428,7 +471,7 @@
       </section>
     </main>
 
-    <!-- Galería del Proyecto 1: agrega o elimina evidencias dentro de evidence-track. -->
+    <!-- Evidencias del Proyecto 1; slides e indicadores deben permanecer sincronizados. -->
     <div class="evidence-modal" id="project-1-gallery" data-gallery-modal hidden>
       <section
         class="evidence-dialog"
@@ -443,7 +486,7 @@
             <p class="section-kicker">Proyecto 01 / Evidencias</p>
             <h2 id="evidence-title">Evidencias del proyecto</h2>
             <p id="evidence-subtitle">
-              Urban Grocers API: pruebas automatizadas con Python y Pytest
+              Urban Routes — Pruebas funcionales y de regresión
             </p>
           </div>
           <button
@@ -471,13 +514,14 @@
               <button
                 class="evidence-slide"
                 type="button"
-                aria-label="Ampliar captura de pruebas automatizadas con Pytest"
+                aria-label="Ampliar captura de Urban Routes"
                 data-gallery-slide
-                data-fallback="Evidencia de Pytest pendiente"
+                data-fallback="Captura de Urban Routes pendiente"
+                data-caption="Vista de Urban Routes durante la validación del flujo de reserva. Se revisaron direcciones, tarifa, licencia, método de pago y comportamiento de la interfaz."
               >
                 <img
-                  src="assets/evidence/project-1/evidencia-01.svg"
-                  alt="Captura de pruebas automatizadas ejecutadas con Pytest"
+                  data-src="assets/evidence/project-1/proyecto-3 evidencia-2.webp"
+                  alt="Captura de Urban Routes durante prueba funcional del flujo de reserva"
                   width="1200"
                   height="675"
                 />
@@ -485,13 +529,14 @@
               <button
                 class="evidence-slide"
                 type="button"
-                aria-label="Ampliar captura de estructura del proyecto"
+                aria-label="Ampliar caso de prueba de Urban Routes"
                 data-gallery-slide
-                data-fallback="Estructura del proyecto pendiente"
+                data-fallback="Caso de prueba pendiente"
+                data-caption="Casos de prueba diseñados a partir de requisitos funcionales, con precondiciones, pasos, resultado esperado, navegador, estado y enlace al bug."
               >
                 <img
-                  src="assets/evidence/project-1/evidencia-02.svg"
-                  alt="Captura de estructura del proyecto Urban Grocers API"
+                  data-src="assets/evidence/project-1/proyecto-3 evidencia-4.webp"
+                  alt="Caso de prueba para Urban Routes documentado en Google Sheets"
                   width="1200"
                   height="675"
                 />
@@ -499,13 +544,14 @@
               <button
                 class="evidence-slide"
                 type="button"
-                aria-label="Ampliar captura de validación de respuestas JSON"
+                aria-label="Ampliar checklist de Urban Routes"
                 data-gallery-slide
-                data-fallback="Validación JSON pendiente"
+                data-fallback="Checklist de resultados pendiente"
+                data-caption="Lista de comprobación utilizada para registrar resultados de diseño y funcionalidad, con estados aprobado o no aprobado y enlaces a incidencias."
               >
                 <img
-                  src="assets/evidence/project-1/evidencia-03.svg"
-                  alt="Captura de validación de respuestas JSON en pruebas de API"
+                  data-src="assets/evidence/project-1/proyecto-3 evidencia-1.webp"
+                  alt="Checklist de resultados de pruebas funcionales en Urban Routes"
                   width="1200"
                   height="675"
                 />
@@ -513,18 +559,19 @@
               <button
                 class="evidence-slide"
                 type="button"
-                aria-label="Ampliar captura de evidencia técnica"
+                aria-label="Ampliar bug de Urban Routes en Jira"
                 data-gallery-slide
-                data-fallback="Evidencia técnica pendiente"
+                data-fallback="Bug documentado pendiente"
+                data-caption="Bug documentado en Jira con descripción, resultados actual y esperado, entorno, pasos para reproducir, severidad y evidencia."
               >
                 <img
-                  src="assets/evidence/project-1/evidencia-04.svg"
-                  alt="Captura de evidencia técnica del proyecto Urban Grocers"
+                  data-src="assets/evidence/project-1/proyecto-3 evidencia-3.webp"
+                  alt="Bug documentado en Jira para Urban Routes"
                   width="1200"
                   height="675"
                 />
               </button>
-              <!-- Agregar más evidencias aquí si se necesitan y sumar su dot abajo. -->
+              <!-- Cada slide adicional requiere un indicador de paginación. -->
             </div>
           </div>
 
@@ -549,7 +596,7 @@
         </div>
       </section>
 
-      <!-- Lightbox interno para revisar una captura sin salir de la galería. -->
+      <!-- El lightbox conserva el contexto de la galería y el foco del teclado. -->
       <div class="evidence-lightbox" data-image-lightbox hidden>
         <figure class="evidence-lightbox-content">
           <button
@@ -560,13 +607,13 @@
           >
             <span class="material-symbols-rounded" aria-hidden="true">close</span>
           </button>
-          <img src="" alt="" data-expanded-image />
+          <img alt="" data-expanded-image />
           <figcaption data-expanded-caption></figcaption>
         </figure>
       </div>
     </div>
 
-    <!-- Galería del Proyecto 2: cada proyecto conserva evidencias y controles propios. -->
+    <!-- El Proyecto 2 utiliza una instancia independiente del componente. -->
     <div class="evidence-modal" id="project-2-gallery" data-gallery-modal hidden>
       <section
         class="evidence-dialog"
@@ -581,7 +628,7 @@
             <p class="section-kicker">Proyecto 02 / Evidencias</p>
             <h2 id="project-2-evidence-title">Evidencias del proyecto</h2>
             <p id="project-2-evidence-subtitle">
-              Pruebas funcionales web, móvil y API
+              Urban Grocers API — Pruebas de API con Postman
             </p>
           </div>
           <button
@@ -609,13 +656,14 @@
               <button
                 class="evidence-slide"
                 type="button"
-                aria-label="Ampliar casos de prueba funcionales"
+                aria-label="Ampliar colección de endpoints en Postman"
                 data-gallery-slide
-                data-fallback="Casos de prueba pendientes"
+                data-fallback="Colección de endpoints pendiente"
+                data-caption="Colección de Postman organizada por endpoints de Urban Grocers para crear, consultar, modificar y eliminar kits, además de validar servicios de entrega."
               >
                 <img
-                  src="assets/evidence/project-2/evidencia-01.svg"
-                  alt="Matriz de casos de prueba funcionales con estados y prioridades"
+                  data-src="assets/evidence/project-2/proyecto-4 evidencia-2.webp"
+                  alt="Colección de endpoints de Urban Grocers en Postman"
                   width="1200"
                   height="675"
                 />
@@ -623,13 +671,14 @@
               <button
                 class="evidence-slide"
                 type="button"
-                aria-label="Ampliar reporte de defecto en JIRA"
+                aria-label="Ampliar prueba positiva de API"
                 data-gallery-slide
-                data-fallback="Reporte de JIRA pendiente"
+                data-fallback="Prueba positiva pendiente"
+                data-caption="Prueba positiva con body JSON válido, validando status code 200 OK, estructura de respuesta y valores esperados."
               >
                 <img
-                  src="assets/evidence/project-2/evidencia-02.svg"
-                  alt="Reporte de defecto documentado en JIRA con pasos y resultados"
+                  data-src="assets/evidence/project-2/proyecto-4 evidencia-1.webp"
+                  alt="Prueba positiva de API en Postman con respuesta JSON"
                   width="1200"
                   height="675"
                 />
@@ -637,13 +686,14 @@
               <button
                 class="evidence-slide"
                 type="button"
-                aria-label="Ampliar pruebas de API en Postman"
+                aria-label="Ampliar prueba negativa de API"
                 data-gallery-slide
-                data-fallback="Pruebas de Postman pendientes"
+                data-fallback="Prueba negativa pendiente"
+                data-caption="Prueba negativa para validar datos fuera de regla, con respuesta 400 Bad Request y mensaje de error al superar el límite permitido."
               >
                 <img
-                  src="assets/evidence/project-2/evidencia-03.svg"
-                  alt="Colección de pruebas de API ejecutadas en Postman"
+                  data-src="assets/evidence/project-2/proyecto-4 evidencia-3.webp"
+                  alt="Prueba negativa de API en Postman con error 400 Bad Request"
                   width="1200"
                   height="675"
                 />
@@ -651,18 +701,19 @@
               <button
                 class="evidence-slide"
                 type="button"
-                aria-label="Ampliar evidencia de pruebas móviles"
+                aria-label="Ampliar bug de API en Jira"
                 data-gallery-slide
-                data-fallback="Pruebas móviles pendientes"
+                data-fallback="Bug de API pendiente"
+                data-caption="Bug de API documentado en Jira con prioridad, ambiente, método HTTP, endpoint, parámetros, body enviado y pasos para reproducir."
               >
                 <img
-                  src="assets/evidence/project-2/evidencia-04.svg"
-                  alt="Evidencia de pruebas funcionales móviles en Android Studio"
+                  data-src="assets/evidence/project-2/proyecto-4 evidencia-4.webp"
+                  alt="Bug de API documentado en Jira para Urban Grocers"
                   width="1200"
                   height="675"
                 />
               </button>
-              <!-- Para reemplazar una evidencia conserva el nombre o actualiza su src. -->
+              <!-- Al reemplazar evidencia, conservar la ruta o actualizar src. -->
             </div>
           </div>
 
@@ -697,7 +748,7 @@
           >
             <span class="material-symbols-rounded" aria-hidden="true">close</span>
           </button>
-          <img src="" alt="" data-expanded-image />
+          <img alt="" data-expanded-image />
           <figcaption data-expanded-caption></figcaption>
         </figure>
       </div>
@@ -705,7 +756,7 @@
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <p>© <span data-year></span> Alejandro Fernández. Portafolio QA desarrollado con HTML, CSS y JavaScript.</p>
+        <p>© <span data-year></span> Alejandro Fernández. Portafolio QA</p>
         <a href="#inicio" aria-label="Volver al inicio">
           Volver arriba
           <span class="material-symbols-rounded" aria-hidden="true">arrow_upward</span>

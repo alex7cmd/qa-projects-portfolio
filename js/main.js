@@ -1,25 +1,94 @@
 "use strict";
 
-// Selectores reutilizados para evitar búsquedas repetidas en el DOM.
+// Referencias estables compartidas por los componentes.
+const rootElement = document.documentElement;
 const header = document.querySelector("[data-header]");
 const menuButton = document.querySelector("[data-menu-button]");
 const navigation = document.querySelector("[data-nav]");
 const navLinks = [...document.querySelectorAll("[data-nav] a")];
-// Observa solo los destinos reales del menú para marcar el enlace activo.
+const themeButton = document.querySelector("[data-theme-toggle]");
+const themeIcon = document.querySelector("[data-theme-icon]");
+const themeColor = document.querySelector('meta[name="theme-color"]');
 const sections = [...document.querySelectorAll("#acerca, #proyecto-1, #proyecto-2, #contacto")];
 const revealItems = document.querySelectorAll(".reveal");
 const contactForm = document.querySelector("[data-contact-form]");
+const contactFields = [...contactForm.querySelectorAll("input, textarea")];
 const formStatus = document.querySelector("[data-form-status]");
 const yearElement = document.querySelector("[data-year]");
 const galleryOpenButtons = [...document.querySelectorAll("[data-gallery-open]")];
 const galleryModals = [...document.querySelectorAll("[data-gallery-modal]")];
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const prefersDarkTheme = window.matchMedia("(prefers-color-scheme: dark)");
+const supportsTouchLayout = window.matchMedia("(max-width: 900px)");
+const desktopNavigation = window.matchMedia("(min-width: 721px)");
 const autoplayDelay = 4500;
+const themeStorageKey = "portfolio-theme-mode";
 let activeGallery = null;
 
-// El año dinámico evita actualizar manualmente el footer.
+// Mantiene vigente el año del footer sin editar contenido manualmente.
 yearElement.textContent = new Date().getFullYear();
+
+function readThemeMode() {
+  try {
+    const savedMode = localStorage.getItem(themeStorageKey);
+    return ["system", "light", "dark"].includes(savedMode) ? savedMode : "system";
+  } catch {
+    return "system";
+  }
+}
+
+function resolveTheme(mode) {
+  if (mode === "system") return prefersDarkTheme.matches ? "dark" : "light";
+  return mode;
+}
+
+function applyThemeMode(mode, persist = false) {
+  const theme = resolveTheme(mode);
+  const isDark = theme === "dark";
+  const labels = {
+    system: "Tema automático. Cambiar a modo claro",
+    light: "Modo claro. Cambiar a modo oscuro",
+    dark: "Modo oscuro. Cambiar a tema automático",
+  };
+  const icons = {
+    system: "brightness_auto",
+    light: "light_mode",
+    dark: "dark_mode",
+  };
+
+  rootElement.dataset.themeMode = mode;
+  rootElement.dataset.theme = theme;
+  themeButton.setAttribute("aria-label", labels[mode]);
+  themeButton.title = labels[mode].split(".")[0];
+  themeIcon.textContent = icons[mode];
+  themeColor.content = isDark ? "#071923" : "#081b2c";
+
+  if (!persist) return;
+
+  try {
+    localStorage.setItem(themeStorageKey, mode);
+  } catch {
+    // El tema se conserva durante la sesión aunque no pueda persistirse.
+  }
+}
+
+themeButton.addEventListener("click", () => {
+  const currentMode = rootElement.dataset.themeMode || "system";
+  const nextMode = {
+    system: "light",
+    light: "dark",
+    dark: "system",
+  }[currentMode];
+
+  applyThemeMode(nextMode, true);
+});
+
+prefersDarkTheme.addEventListener("change", () => {
+  if (rootElement.dataset.themeMode === "system") applyThemeMode("system");
+});
+
+applyThemeMode(rootElement.dataset.themeMode || readThemeMode());
 
 function closeMenu() {
   navigation.classList.remove("is-open");
@@ -43,7 +112,7 @@ function toggleMenu() {
 menuButton.addEventListener("click", toggleMenu);
 navLinks.forEach((link) => link.addEventListener("click", closeMenu));
 
-// Cada modal administra su propio carrusel para poder reutilizar el componente.
+// Cada modal mantiene su estado para que la galería sea reutilizable.
 function createGallery(modal) {
   const closeButton = modal.querySelector("[data-gallery-close]");
   const previousButton = modal.querySelector("[data-gallery-prev]");
@@ -60,6 +129,9 @@ function createGallery(modal) {
   let currentSlide = 0;
   let autoplayTimer = null;
   let lastFocused = null;
+  let touchStartX = null;
+  let touchStartY = null;
+  let didSwipe = false;
 
   function update() {
     track.style.transform = `translateX(-${currentSlide * 100}%)`;
@@ -77,8 +149,20 @@ function createGallery(modal) {
     status.textContent = `Evidencia ${currentSlide + 1} de ${slides.length}`;
   }
 
+  function loadImage(index, priority = "low") {
+    const image = slides[index]?.querySelector("img");
+
+    if (!image?.dataset.src || image.hasAttribute("src")) return;
+
+    image.decoding = "async";
+    image.fetchPriority = priority;
+    image.src = image.dataset.src;
+  }
+
   function goToSlide(index) {
     currentSlide = (index + slides.length) % slides.length;
+    loadImage(currentSlide, "high");
+    loadImage((currentSlide + 1) % slides.length);
     update();
   }
 
@@ -136,7 +220,7 @@ function createGallery(modal) {
     stopAutoplay();
     expandedImage.src = image.currentSrc || image.src;
     expandedImage.alt = image.alt;
-    expandedCaption.textContent = image.alt;
+    expandedCaption.textContent = slide.dataset.caption || image.alt;
     lightbox.hidden = false;
     expandedCloseButton.focus();
   }
@@ -190,6 +274,56 @@ function createGallery(modal) {
     update();
   }
 
+  function resetTouch() {
+    touchStartX = null;
+    touchStartY = null;
+  }
+
+  function handleTouchStart(event) {
+    if (!supportsTouchLayout.matches || !lightbox.hidden || event.touches.length !== 1) {
+      return;
+    }
+
+    const touch = event.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    stopAutoplay();
+  }
+
+  function handleTouchEnd(event) {
+    if (touchStartX === null || touchStartY === null || !event.changedTouches.length) {
+      return;
+    }
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+    const isHorizontalSwipe = Math.abs(deltaX) >= 48 && Math.abs(deltaX) > Math.abs(deltaY);
+
+    resetTouch();
+
+    if (!isHorizontalSwipe) {
+      startAutoplay();
+      return;
+    }
+
+    didSwipe = true;
+    if (deltaX < 0) {
+      next();
+    } else {
+      previous();
+    }
+    restartAutoplay();
+    window.setTimeout(() => {
+      didSwipe = false;
+    }, 350);
+  }
+
+  function handleTouchCancel() {
+    resetTouch();
+    startAutoplay();
+  }
+
   const controller = {
     close,
     closeExpandedImage,
@@ -222,10 +356,14 @@ function createGallery(modal) {
 
   slides.forEach((slide, index) => {
     const image = slide.querySelector("img");
-    slide.addEventListener("click", () => openExpandedImage(index));
+    slide.addEventListener("click", () => {
+      if (!didSwipe) openExpandedImage(index);
+    });
     image.addEventListener("error", () => markMissingEvidence(image));
 
-    if (image.complete && image.naturalWidth === 0) markMissingEvidence(image);
+    if (image.hasAttribute("src") && image.complete && image.naturalWidth === 0) {
+      markMissingEvidence(image);
+    }
   });
 
   modal.addEventListener("click", (event) => {
@@ -237,6 +375,9 @@ function createGallery(modal) {
   expandedCloseButton.addEventListener("click", () => closeExpandedImage());
   viewport.addEventListener("pointerenter", stopAutoplay);
   viewport.addEventListener("pointerleave", startAutoplay);
+  viewport.addEventListener("touchstart", handleTouchStart, { passive: true });
+  viewport.addEventListener("touchend", handleTouchEnd, { passive: true });
+  viewport.addEventListener("touchcancel", handleTouchCancel, { passive: true });
 
   update();
   return controller;
@@ -252,7 +393,7 @@ galleryOpenButtons.forEach((button) => {
   });
 });
 
-// Teclado: Escape cierra capas y las flechas controlan el carrusel activo.
+// El teclado ofrece las mismas acciones disponibles con puntero.
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     if (activeGallery) {
@@ -286,8 +427,8 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-window.addEventListener("resize", () => {
-  if (window.innerWidth > 720) closeMenu();
+desktopNavigation.addEventListener("change", (event) => {
+  if (event.matches) closeMenu();
 });
 
 document.addEventListener("visibilitychange", () => {
@@ -300,15 +441,27 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
-// Cambia el header solo después de iniciar el desplazamiento.
+// El header gana elevación solo después de iniciar el desplazamiento.
 function updateHeader() {
   header.classList.toggle("is-scrolled", window.scrollY > 16);
 }
 
-updateHeader();
-window.addEventListener("scroll", updateHeader, { passive: true });
+let headerUpdatePending = false;
 
-// IntersectionObserver anima únicamente elementos que entran al viewport.
+function scheduleHeaderUpdate() {
+  if (headerUpdatePending) return;
+
+  headerUpdatePending = true;
+  window.requestAnimationFrame(() => {
+    updateHeader();
+    headerUpdatePending = false;
+  });
+}
+
+updateHeader();
+window.addEventListener("scroll", scheduleHeaderUpdate, { passive: true });
+
+// Cada elemento se observa una vez para evitar animaciones repetidas.
 if ("IntersectionObserver" in window) {
   const revealObserver = new IntersectionObserver(
     (entries, observer) => {
@@ -324,7 +477,7 @@ if ("IntersectionObserver" in window) {
 
   revealItems.forEach((item) => revealObserver.observe(item));
 
-  // Resalta en el menú la sección que se encuentra visible.
+  // Sincroniza el estado del menú con la sección visible.
   const sectionObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -344,7 +497,23 @@ if ("IntersectionObserver" in window) {
   revealItems.forEach((item) => item.classList.add("is-visible"));
 }
 
-// GitHub Pages no tiene backend; mailto prepara el mensaje en el dispositivo.
+// Los mensajes propios no dependen del idioma configurado en el navegador.
+function updateValidationMessage(field) {
+  field.setCustomValidity("");
+
+  if (field.validity.valueMissing) {
+    field.setCustomValidity("Completa este campo.");
+  } else if (field.validity.typeMismatch) {
+    field.setCustomValidity("Ingresa un correo electrónico válido.");
+  }
+}
+
+contactFields.forEach((field) => {
+  field.addEventListener("invalid", () => updateValidationMessage(field));
+  field.addEventListener("input", () => field.setCustomValidity(""));
+});
+
+// GitHub Pages no ejecuta backend; el formulario prepara una solicitud mailto.
 contactForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
